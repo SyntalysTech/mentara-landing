@@ -42,7 +42,12 @@ export default function PrivacyPage() {
           <section style={styles.section}>
             <h2 style={styles.sectionTitle}>What Data We Collect</h2>
             <div style={styles.highlight}>
-              <span style={styles.highlightIcon}>🔒</span>
+              <span style={styles.highlightIcon}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
               <p style={styles.highlightText}>
                 <strong>None.</strong> Mentara does not collect any personal data. All your notes, tags, and settings
                 are stored locally on your device and never leave it.
@@ -54,23 +59,48 @@ export default function PrivacyPage() {
             <h2 style={styles.sectionTitle}>How Mentara Works</h2>
             <ul style={styles.list}>
               <li style={styles.listItem}>
-                <span style={styles.listIcon}>📱</span>
+                <span style={styles.listIcon}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                  </svg>
+                </span>
                 <span><strong>Local Storage Only:</strong> All your notes are stored in a SQLite database on your device.</span>
               </li>
               <li style={styles.listItem}>
-                <span style={styles.listIcon}>🚫</span>
+                <span style={styles.listIcon}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                  </svg>
+                </span>
                 <span><strong>No Cloud Sync:</strong> We don't offer cloud sync, which means your data never touches our servers.</span>
               </li>
               <li style={styles.listItem}>
-                <span style={styles.listIcon}>👤</span>
+                <span style={styles.listIcon}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </span>
                 <span><strong>No Accounts:</strong> You don't need to create an account or provide any personal information.</span>
               </li>
               <li style={styles.listItem}>
-                <span style={styles.listIcon}>📊</span>
+                <span style={styles.listIcon}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                  </svg>
+                </span>
                 <span><strong>No Analytics:</strong> We don't use any analytics or tracking SDKs.</span>
               </li>
               <li style={styles.listItem}>
-                <span style={styles.listIcon}>📢</span>
+                <span style={styles.listIcon}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </span>
                 <span><strong>No Ads:</strong> Mentara is ad-free and will always remain so.</span>
               </li>
             </ul>
@@ -262,8 +292,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: '1px solid rgba(255, 138, 0, 0.2)',
   },
   highlightIcon: {
-    fontSize: '32px',
     flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   highlightText: {
     fontSize: '16px',
@@ -288,9 +320,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#444444',
   },
   listIcon: {
-    fontSize: '20px',
     flexShrink: 0,
     marginTop: '2px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   link: {
     color: '#FF8A00',

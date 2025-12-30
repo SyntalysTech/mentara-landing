@@ -6,43 +6,93 @@ import { useState, useEffect } from 'react'
 
 const features = [
   {
-    icon: '🔒',
+    icon: 'shield',
     title: 'Truly Private',
     description: 'Your notes never leave your device. No accounts, no cloud sync, no tracking.',
   },
   {
-    icon: '🔗',
+    icon: 'link',
     title: 'Link Your Ideas',
     description: 'Connect notes with [[wiki-style links]] to build your personal knowledge graph.',
   },
   {
-    icon: '🏷️',
+    icon: 'tag',
     title: 'Organize with Tags',
     description: 'Tag your notes and filter by topic to find exactly what you need.',
   },
   {
-    icon: '📱',
+    icon: 'offline',
     title: 'Works Offline',
     description: 'Access and edit your notes anywhere, anytime. No internet required.',
   },
   {
-    icon: '🔐',
+    icon: 'lock',
     title: 'PIN Protection',
     description: 'Optional PIN lock keeps your thoughts secure from prying eyes.',
   },
   {
-    icon: '📤',
+    icon: 'export',
     title: 'Export Anytime',
     description: 'Export your notes to PDF or CSV. Your data belongs to you.',
   },
 ]
 
 const floatingNotes = [
-  { text: 'Meeting notes 📝', x: 10, y: 20, delay: 0 },
+  { text: 'Meeting notes', x: 10, y: 20, delay: 0 },
   { text: '[[Project Ideas]]', x: 80, y: 15, delay: 0.5 },
   { text: '#productivity', x: 15, y: 70, delay: 1 },
   { text: 'Remember to...', x: 75, y: 65, delay: 1.5 },
 ]
+
+const FeatureIcon = ({ type }: { type: string }) => {
+  const iconStyle: React.CSSProperties = {
+    width: 40,
+    height: 40,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'rgba(255, 138, 0, 0.1)',
+    borderRadius: 10,
+    marginBottom: 16,
+  }
+
+  const svgProps = { width: 24, height: 24, fill: '#FF8A00' }
+
+  const icons: { [key: string]: JSX.Element } = {
+    shield: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+      </svg>
+    ),
+    link: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </svg>
+    ),
+    tag: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+      </svg>
+    ),
+    offline: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/>
+      </svg>
+    ),
+    lock: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+      </svg>
+    ),
+    export: (
+      <svg {...svgProps} viewBox="0 0 24 24">
+        <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/>
+      </svg>
+    ),
+  }
+
+  return <div style={iconStyle}>{icons[type]}</div>
+}
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -88,7 +138,6 @@ export default function Home() {
 
         <div style={styles.heroContent} className={mounted ? 'animate-slideUp' : ''}>
           <div style={styles.badge}>
-            <span style={styles.badgeIcon}>✨</span>
             <span>Privacy-First Note Taking</span>
           </div>
 
@@ -118,30 +167,92 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Phone Mockup */}
+        {/* Phone Mockup - Realistic App UI */}
         <div style={styles.phoneMockup} className={mounted ? 'animate-scaleIn delay-300' : ''}>
           <div style={styles.phoneFrame}>
             <div style={styles.phoneNotch}></div>
             <div style={styles.phoneScreen}>
+              {/* App Header */}
               <div style={styles.mockupHeader}>
                 <Image src="/icon.png" alt="Mentara" width={24} height={24} />
                 <span style={styles.mockupLogoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
               </div>
-              <div style={styles.mockupNote}>
-                <div style={styles.mockupNoteTitle}>My Ideas 💡</div>
-                <div style={styles.mockupNoteContent}>
-                  Working on something exciting...<br /><br />
-                  Check out <span style={styles.mockupLink}>[[Project Notes]]</span> for details.
+
+              {/* Notes List */}
+              <div style={styles.mockupNotesList}>
+                {/* Pinned Note */}
+                <div style={styles.mockupNoteCard}>
+                  <div style={styles.mockupNoteCardHeader}>
+                    <span style={styles.mockupNoteCardTitle}>Project Brainstorm</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF8A00">
+                      <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                  </div>
+                  <div style={styles.mockupNoteCardContent}>
+                    Ideas for the new feature. Check <span style={styles.mockupLink}>[[Design Notes]]</span> for mockups...
+                  </div>
+                  <div style={styles.mockupTags}>
+                    <span style={styles.mockupTag}>work</span>
+                    <span style={styles.mockupTag}>ideas</span>
+                  </div>
                 </div>
-                <div style={styles.mockupTags}>
-                  <span style={styles.mockupTag}>#ideas</span>
-                  <span style={styles.mockupTag}>#work</span>
+
+                {/* Regular Note */}
+                <div style={styles.mockupNoteCard}>
+                  <div style={styles.mockupNoteCardHeader}>
+                    <span style={styles.mockupNoteCardTitle}>Meeting Notes</span>
+                  </div>
+                  <div style={styles.mockupNoteCardContent}>
+                    Key points from today's standup. Action items for next week...
+                  </div>
+                </div>
+
+                {/* Another Note */}
+                <div style={styles.mockupNoteCard}>
+                  <div style={styles.mockupNoteCardHeader}>
+                    <span style={styles.mockupNoteCardTitle}>Reading List</span>
+                  </div>
+                  <div style={styles.mockupNoteCardContent}>
+                    Books to check out this month...
+                  </div>
+                  <div style={styles.mockupTags}>
+                    <span style={styles.mockupTag}>personal</span>
+                  </div>
                 </div>
               </div>
-              <div style={styles.mockupNote}>
-                <div style={styles.mockupNoteTitle}>Meeting Notes</div>
-                <div style={styles.mockupNoteContent}>
-                  Key takeaways from today...
+
+              {/* FAB Button */}
+              <div style={styles.mockupFab}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+              </div>
+
+              {/* Tab Bar */}
+              <div style={styles.mockupTabBar}>
+                <div style={styles.mockupTabActive}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8A00">
+                    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                  </svg>
+                  <span style={styles.mockupTabTextActive}>Notes</span>
+                </div>
+                <div style={styles.mockupTab}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#999">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                  </svg>
+                  <span style={styles.mockupTabText}>Search</span>
+                </div>
+                <div style={styles.mockupTab}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#999">
+                    <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                  </svg>
+                  <span style={styles.mockupTabText}>Tags</span>
+                </div>
+                <div style={styles.mockupTab}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#999">
+                    <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                  </svg>
+                  <span style={styles.mockupTabText}>Settings</span>
                 </div>
               </div>
             </div>
@@ -169,7 +280,7 @@ export default function Home() {
               style={styles.featureCard}
               className={mounted ? `animate-fadeIn delay-${(i + 1) * 100}` : ''}
             >
-              <div style={styles.featureIcon}>{feature.icon}</div>
+              <FeatureIcon type={feature.icon} />
               <h3 style={styles.featureTitle}>{feature.title}</h3>
               <p style={styles.featureDescription}>{feature.description}</p>
             </div>
@@ -260,7 +371,6 @@ export default function Home() {
 
         <div style={styles.footerBottom}>
           <p>© 2024 SYNTALYS TECH. All rights reserved.</p>
-          <p style={styles.footerMadeWith}>Made with ❤️ for thinkers everywhere</p>
         </div>
       </footer>
     </main>
@@ -358,9 +468,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#FF8A00',
     marginBottom: '24px',
   },
-  badgeIcon: {
-    fontSize: '16px',
-  },
   heroTitle: {
     fontSize: 'clamp(40px, 8vw, 72px)',
     fontWeight: 800,
@@ -428,61 +535,118 @@ const styles: { [key: string]: React.CSSProperties } = {
     height: '28px',
     background: '#1a1a1a',
     borderRadius: '20px',
-    margin: '0 auto 12px',
+    margin: '0 auto 8px',
   },
   phoneScreen: {
     width: '100%',
-    height: 'calc(100% - 40px)',
+    height: 'calc(100% - 36px)',
     background: '#FFFFFF',
     borderRadius: '28px',
-    padding: '16px',
     overflow: 'hidden',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
   },
   mockupHeader: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    marginBottom: '20px',
+    padding: '12px 16px',
+    borderBottom: '1px solid #E5E5E5',
   },
   mockupLogoText: {
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 700,
   },
-  mockupNote: {
+  mockupNotesList: {
+    flex: 1,
+    padding: '12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    overflow: 'hidden',
+  },
+  mockupNoteCard: {
     background: '#F5F5F5',
     borderRadius: '12px',
-    padding: '16px',
-    marginBottom: '12px',
+    padding: '12px',
   },
-  mockupNoteTitle: {
-    fontSize: '16px',
-    fontWeight: 600,
-    marginBottom: '8px',
+  mockupNoteCardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '6px',
   },
-  mockupNoteContent: {
+  mockupNoteCardTitle: {
     fontSize: '13px',
+    fontWeight: 600,
+    color: '#1a1a1a',
+  },
+  mockupNoteCardContent: {
+    fontSize: '11px',
     color: '#666666',
-    lineHeight: 1.5,
+    lineHeight: 1.4,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   mockupLink: {
     color: '#FF8A00',
     fontWeight: 600,
-    background: 'rgba(255, 138, 0, 0.1)',
-    padding: '2px 6px',
-    borderRadius: '4px',
   },
   mockupTags: {
     display: 'flex',
-    gap: '6px',
-    marginTop: '12px',
+    gap: '4px',
+    marginTop: '8px',
   },
   mockupTag: {
-    fontSize: '11px',
+    fontSize: '9px',
     fontWeight: 600,
     color: '#FFFFFF',
     background: '#FF8A00',
-    padding: '4px 10px',
+    padding: '3px 8px',
     borderRadius: '20px',
+  },
+  mockupFab: {
+    position: 'absolute',
+    right: 16,
+    bottom: 70,
+    width: 48,
+    height: 48,
+    background: '#FF8A00',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 4px 12px rgba(255, 138, 0, 0.4)',
+  },
+  mockupTabBar: {
+    display: 'flex',
+    borderTop: '1px solid #E5E5E5',
+    padding: '8px 0',
+    background: '#FFFFFF',
+  },
+  mockupTab: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '2px',
+  },
+  mockupTabActive: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '2px',
+  },
+  mockupTabText: {
+    fontSize: '9px',
+    color: '#999',
+  },
+  mockupTabTextActive: {
+    fontSize: '9px',
+    color: '#FF8A00',
+    fontWeight: 600,
   },
   features: {
     padding: '100px 24px',
@@ -517,10 +681,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '20px',
     border: '1px solid #E5E5E5',
     transition: 'transform 0.2s, box-shadow 0.2s',
-  },
-  featureIcon: {
-    fontSize: '40px',
-    marginBottom: '16px',
   },
   featureTitle: {
     fontSize: '20px',
@@ -659,14 +819,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     maxWidth: '1200px',
     margin: '0 auto',
     paddingTop: '24px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    gap: '16px',
     fontSize: '14px',
     color: '#a0a0a0',
-  },
-  footerMadeWith: {
-    color: '#666666',
   },
 }
