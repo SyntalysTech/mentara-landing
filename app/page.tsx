@@ -153,14 +153,14 @@ export default function Home() {
 
           <div style={styles.heroButtons}>
             <a href="#" style={styles.primaryButton}>
-              <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor">
-                <path d="M15.769 0H4.23C1.895 0 0 1.895 0 4.23v15.54C0 22.105 1.895 24 4.23 24h11.54c2.334 0 4.23-1.895 4.23-4.23V4.23C20 1.895 18.105 0 15.769 0zm-5.77 21.23a1.385 1.385 0 110-2.77 1.385 1.385 0 010 2.77zm5.385-4.615H4.615V4.23h10.77v12.385z"/>
+              <svg width="20" height="24" viewBox="0 0 384 512" fill="currentColor">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
               </svg>
               <span>Coming to App Store</span>
             </a>
             <a href="#" style={styles.secondaryButton}>
-              <svg width="20" height="22" viewBox="0 0 20 22" fill="currentColor">
-                <path d="M17.523 7.326a4.635 4.635 0 00-2.183-3.89A4.794 4.794 0 0010.05 0a4.794 4.794 0 00-5.291 3.436 4.635 4.635 0 00-2.183 3.89A4.635 4.635 0 000 11.216v.013a4.62 4.62 0 002.576 4.156 4.794 4.794 0 005.291 3.436 4.635 4.635 0 003.466 1.547h.013a4.794 4.794 0 005.291-3.436 4.635 4.635 0 002.183-3.89v-.013a4.635 4.635 0 00-1.297-3.703z"/>
+              <svg width="20" height="22" viewBox="0 0 512 512" fill="currentColor">
+                <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
               </svg>
               <span>Coming to Play Store</span>
             </a>
@@ -169,8 +169,17 @@ export default function Home() {
 
         {/* Phone Mockup - Realistic App UI */}
         <div style={styles.phoneMockup} className={mounted ? 'animate-scaleIn delay-300' : ''}>
+          {/* Side Buttons */}
+          <div style={styles.phoneSideButtonLeft}></div>
+          <div style={styles.phoneSideButtonRight1}></div>
+          <div style={styles.phoneSideButtonRight2}></div>
+
           <div style={styles.phoneFrame}>
-            <div style={styles.phoneNotch}></div>
+            {/* Dynamic Island / Notch with camera and speaker */}
+            <div style={styles.phoneDynamicIsland}>
+              <div style={styles.phoneSpeaker}></div>
+              <div style={styles.phoneCamera}></div>
+            </div>
             <div style={styles.phoneScreen}>
               {/* App Header */}
               <div style={styles.mockupHeader}>
@@ -522,26 +531,75 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 2,
     marginTop: '60px',
   },
+  phoneSideButtonLeft: {
+    position: 'absolute',
+    left: '-3px',
+    top: '120px',
+    width: '3px',
+    height: '32px',
+    background: 'linear-gradient(90deg, #2a2a2a 0%, #4a4a4a 50%, #2a2a2a 100%)',
+    borderRadius: '2px 0 0 2px',
+  },
+  phoneSideButtonRight1: {
+    position: 'absolute',
+    right: '-3px',
+    top: '100px',
+    width: '3px',
+    height: '60px',
+    background: 'linear-gradient(90deg, #2a2a2a 0%, #4a4a4a 50%, #2a2a2a 100%)',
+    borderRadius: '0 2px 2px 0',
+  },
+  phoneSideButtonRight2: {
+    position: 'absolute',
+    right: '-3px',
+    top: '180px',
+    width: '3px',
+    height: '60px',
+    background: 'linear-gradient(90deg, #2a2a2a 0%, #4a4a4a 50%, #2a2a2a 100%)',
+    borderRadius: '0 2px 2px 0',
+  },
   phoneFrame: {
     width: '280px',
     height: '580px',
-    background: '#1a1a1a',
-    borderRadius: '40px',
-    padding: '12px',
-    boxShadow: '0 50px 100px rgba(0, 0, 0, 0.15)',
+    background: 'linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%)',
+    borderRadius: '48px',
+    padding: '10px',
+    boxShadow: '0 50px 100px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+    border: '1px solid #3a3a3a',
   },
-  phoneNotch: {
-    width: '120px',
+  phoneDynamicIsland: {
+    position: 'absolute',
+    top: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '100px',
     height: '28px',
-    background: '#1a1a1a',
+    background: '#000000',
     borderRadius: '20px',
-    margin: '0 auto 8px',
+    zIndex: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+  },
+  phoneSpeaker: {
+    width: '40px',
+    height: '4px',
+    background: '#1a1a1a',
+    borderRadius: '2px',
+  },
+  phoneCamera: {
+    width: '8px',
+    height: '8px',
+    background: 'radial-gradient(circle, #1a3a5c 0%, #0a1a2c 60%, #000 100%)',
+    borderRadius: '50%',
+    border: '1px solid #2a2a2a',
   },
   phoneScreen: {
     width: '100%',
-    height: 'calc(100% - 36px)',
+    height: '100%',
     background: '#FFFFFF',
-    borderRadius: '28px',
+    borderRadius: '40px',
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
@@ -551,7 +609,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '12px 16px',
+    padding: '42px 16px 12px',
     borderBottom: '1px solid #E5E5E5',
   },
   mockupLogoText: {
