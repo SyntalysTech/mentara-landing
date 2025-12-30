@@ -3,39 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-
-const features = [
-  {
-    icon: 'shield',
-    title: 'Truly Private',
-    description: 'Your notes never leave your device. No accounts, no cloud sync, no tracking.',
-  },
-  {
-    icon: 'link',
-    title: 'Link Your Ideas',
-    description: 'Connect notes with [[wiki-style links]] to build your personal knowledge graph.',
-  },
-  {
-    icon: 'tag',
-    title: 'Organize with Tags',
-    description: 'Tag your notes and filter by topic to find exactly what you need.',
-  },
-  {
-    icon: 'offline',
-    title: 'Works Offline',
-    description: 'Access and edit your notes anywhere, anytime. No internet required.',
-  },
-  {
-    icon: 'lock',
-    title: 'PIN Protection',
-    description: 'Optional PIN lock keeps your thoughts secure from prying eyes.',
-  },
-  {
-    icon: 'export',
-    title: 'Export Anytime',
-    description: 'Export your notes to PDF or CSV. Your data belongs to you.',
-  },
-]
+import { useLanguage } from './i18n/LanguageContext'
+import { LanguageSelector } from './components/LanguageSelector'
 
 const floatingNotes = [
   { text: 'Meeting notes', x: 10, y: 20, delay: 0 },
@@ -96,10 +65,20 @@ const FeatureIcon = ({ type }: { type: string }) => {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const features = [
+    { icon: 'shield', ...t.home.features.private },
+    { icon: 'link', ...t.home.features.link },
+    { icon: 'tag', ...t.home.features.tags },
+    { icon: 'offline', ...t.home.features.offline },
+    { icon: 'lock', ...t.home.features.pin },
+    { icon: 'export', ...t.home.features.export },
+  ]
 
   return (
     <main style={styles.main}>
@@ -110,9 +89,13 @@ export default function Home() {
             <Image src="/icon.png" alt="Mentara" width={40} height={40} />
             <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
           </div>
-          <div style={styles.navLinks}>
-            <Link href="/privacy" style={styles.navLink}>Privacy</Link>
-            <Link href="/support" style={styles.navLink}>Support</Link>
+          <div style={styles.navRight}>
+            <div style={styles.navLinks}>
+              <Link href="/" style={styles.navLink}>{t.nav.home}</Link>
+              <Link href="/privacy" style={styles.navLink}>{t.nav.privacy}</Link>
+              <Link href="/support" style={styles.navLink}>{t.nav.support}</Link>
+            </div>
+            <LanguageSelector />
           </div>
         </div>
       </nav>
@@ -138,17 +121,16 @@ export default function Home() {
 
         <div style={styles.heroContent} className={mounted ? 'animate-slideUp' : ''}>
           <div style={styles.badge}>
-            <span>Privacy-First Note Taking</span>
+            <span>{t.home.badge}</span>
           </div>
 
           <h1 style={styles.heroTitle}>
-            Your Offline<br />
-            <span style={styles.heroTitleAccent}>Second Brain</span>
+            {t.home.heroTitle1}<br />
+            <span style={styles.heroTitleAccent}>{t.home.heroTitle2}</span>
           </h1>
 
           <p style={styles.heroSubtitle}>
-            Capture ideas, link thoughts, and build your personal knowledge base —
-            all while keeping your data completely private on your device.
+            {t.home.heroSubtitle}
           </p>
 
           <div style={styles.heroButtons}>
@@ -156,13 +138,13 @@ export default function Home() {
               <svg width="20" height="24" viewBox="0 0 384 512" fill="currentColor">
                 <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
               </svg>
-              <span>Coming to App Store</span>
+              <span>{t.home.comingAppStore}</span>
             </a>
             <a href="#" style={styles.secondaryButton}>
               <svg width="20" height="22" viewBox="0 0 512 512" fill="currentColor">
                 <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
               </svg>
-              <span>Coming to Play Store</span>
+              <span>{t.home.comingPlayStore}</span>
             </a>
           </div>
         </div>
@@ -273,12 +255,11 @@ export default function Home() {
       <section style={styles.features}>
         <div style={styles.featuresHeader}>
           <h2 style={styles.sectionTitle}>
-            Everything you need.<br />
-            <span style={styles.heroTitleAccent}>Nothing you don't.</span>
+            {t.home.featuresTitle1}<br />
+            <span style={styles.heroTitleAccent}>{t.home.featuresTitle2}</span>
           </h2>
           <p style={styles.sectionSubtitle}>
-            Mentara is designed to be simple, fast, and private.
-            No bloat, no subscriptions, no data mining.
+            {t.home.featuresSubtitle}
           </p>
         </div>
 
@@ -300,16 +281,16 @@ export default function Home() {
       {/* How It Works */}
       <section style={styles.howItWorks}>
         <h2 style={styles.sectionTitle}>
-          How <span style={styles.heroTitleAccent}>Mentara</span> Works
+          {t.home.howItWorksTitle} <span style={styles.heroTitleAccent}>Mentara</span> {t.home.howItWorksTitle2}
         </h2>
 
         <div style={styles.stepsContainer}>
           <div style={styles.step}>
             <div style={styles.stepNumber}>1</div>
             <div style={styles.stepContent}>
-              <h3 style={styles.stepTitle}>Capture</h3>
+              <h3 style={styles.stepTitle}>{t.home.step1.title}</h3>
               <p style={styles.stepDescription}>
-                Jot down ideas instantly. Notes auto-save as you type.
+                {t.home.step1.description}
               </p>
             </div>
           </div>
@@ -319,9 +300,9 @@ export default function Home() {
           <div style={styles.step}>
             <div style={styles.stepNumber}>2</div>
             <div style={styles.stepContent}>
-              <h3 style={styles.stepTitle}>Connect</h3>
+              <h3 style={styles.stepTitle}>{t.home.step2.title}</h3>
               <p style={styles.stepDescription}>
-                Link related notes with [[wiki links]] to build your knowledge web.
+                {t.home.step2.description}
               </p>
             </div>
           </div>
@@ -331,9 +312,9 @@ export default function Home() {
           <div style={styles.step}>
             <div style={styles.stepNumber}>3</div>
             <div style={styles.stepContent}>
-              <h3 style={styles.stepTitle}>Discover</h3>
+              <h3 style={styles.stepTitle}>{t.home.step3.title}</h3>
               <p style={styles.stepDescription}>
-                Find connections and insights as your second brain grows.
+                {t.home.step3.description}
               </p>
             </div>
           </div>
@@ -343,13 +324,13 @@ export default function Home() {
       {/* CTA Section */}
       <section style={styles.cta}>
         <div style={styles.ctaContent}>
-          <h2 style={styles.ctaTitle}>Ready to think better?</h2>
+          <h2 style={styles.ctaTitle}>{t.home.ctaTitle}</h2>
           <p style={styles.ctaSubtitle}>
-            Join thousands who trust Mentara with their ideas.
+            {t.home.ctaSubtitle}
           </p>
           <div style={styles.ctaButtons}>
             <a href="#" style={styles.primaryButton}>
-              Get Mentara Free
+              {t.home.ctaButton}
             </a>
           </div>
         </div>
@@ -363,23 +344,23 @@ export default function Home() {
               <Image src="/icon.png" alt="Mentara" width={32} height={32} />
               <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
             </div>
-            <p style={styles.footerTagline}>Your Offline Second Brain</p>
+            <p style={styles.footerTagline}>{t.home.footerTagline}</p>
           </div>
 
           <div style={styles.footerLinks}>
             <div style={styles.footerColumn}>
-              <h4 style={styles.footerColumnTitle}>Legal</h4>
-              <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
+              <h4 style={styles.footerColumnTitle}>{t.home.footerLegal}</h4>
+              <Link href="/privacy" style={styles.footerLink}>{t.nav.privacy}</Link>
             </div>
             <div style={styles.footerColumn}>
-              <h4 style={styles.footerColumnTitle}>Help</h4>
-              <Link href="/support" style={styles.footerLink}>Support</Link>
+              <h4 style={styles.footerColumnTitle}>{t.home.footerHelp}</h4>
+              <Link href="/support" style={styles.footerLink}>{t.nav.support}</Link>
             </div>
           </div>
         </div>
 
         <div style={styles.footerBottom}>
-          <p>© 2024 SYNTALYS TECH. All rights reserved.</p>
+          <p>{t.home.footerCopyright}</p>
         </div>
       </footer>
     </main>
@@ -421,6 +402,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   logoAccent: {
     color: '#FF8A00',
+  },
+  navRight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '24px',
   },
   navLinks: {
     display: 'flex',

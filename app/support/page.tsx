@@ -3,37 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-
-const faqs = [
-  {
-    question: 'Is Mentara really free?',
-    answer: 'Yes! Mentara is completely free to use. No subscriptions, no in-app purchases, no hidden costs.',
-  },
-  {
-    question: 'Where is my data stored?',
-    answer: 'All your data is stored locally on your device using SQLite. Your notes never leave your phone.',
-  },
-  {
-    question: 'Can I sync my notes between devices?',
-    answer: 'Currently, Mentara is designed to work offline on a single device to maximize privacy. We\'re exploring privacy-respecting sync options for the future.',
-  },
-  {
-    question: 'What are [[note links]]?',
-    answer: 'Note links let you connect related notes together. Just type [[Note Title]] in any note to create a link. If the note doesn\'t exist, Mentara will offer to create it.',
-  },
-  {
-    question: 'I forgot my PIN. How do I recover it?',
-    answer: 'For security reasons, we don\'t store your PIN anywhere we can access. If you forget your PIN, you\'ll need to reinstall the app, which will delete all data.',
-  },
-  {
-    question: 'How do I export my notes?',
-    answer: 'Go to Settings > Export and choose PDF or CSV format. Your export is generated locally on your device.',
-  },
-]
+import { useLanguage } from '../i18n/LanguageContext'
+import { LanguageSelector } from '../components/LanguageSelector'
 
 export default function SupportPage() {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const { t } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -71,26 +47,28 @@ export default function SupportPage() {
             <Image src="/icon.png" alt="Mentara" width={40} height={40} />
             <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
           </Link>
-          <div style={styles.navLinks}>
-            <Link href="/privacy" style={styles.navLink}>Privacy</Link>
-            <Link href="/support" style={styles.navLinkActive}>Support</Link>
+          <div style={styles.navRight}>
+            <div style={styles.navLinks}>
+              <Link href="/" style={styles.navLink}>{t.nav.home}</Link>
+              <Link href="/privacy" style={styles.navLink}>{t.nav.privacy}</Link>
+              <Link href="/support" style={styles.navLinkActive}>{t.nav.support}</Link>
+            </div>
+            <LanguageSelector />
           </div>
         </div>
       </nav>
 
       {/* Hero */}
       <section style={styles.hero}>
-        <h1 style={styles.title}>How can we help?</h1>
-        <p style={styles.subtitle}>
-          Get answers to common questions or reach out to our team
-        </p>
+        <h1 style={styles.title}>{t.support.title}</h1>
+        <p style={styles.subtitle}>{t.support.subtitle}</p>
       </section>
 
       {/* FAQ Section */}
       <section style={styles.faqSection}>
-        <h2 style={styles.sectionTitle}>Frequently Asked Questions</h2>
+        <h2 style={styles.sectionTitle}>{t.support.faqTitle}</h2>
         <div style={styles.faqList}>
-          {faqs.map((faq, index) => (
+          {t.support.faqs.map((faq, index) => (
             <div
               key={index}
               style={{
@@ -124,10 +102,8 @@ export default function SupportPage() {
       <section style={styles.contactSection}>
         <div style={styles.contactContent}>
           <div style={styles.contactInfo}>
-            <h2 style={styles.sectionTitle}>Still need help?</h2>
-            <p style={styles.contactDescription}>
-              Can't find what you're looking for? Send us a message and we'll get back to you as soon as possible.
-            </p>
+            <h2 style={styles.sectionTitle}>{t.support.contactTitle}</h2>
+            <p style={styles.contactDescription}>{t.support.contactDescription}</p>
             <div style={styles.contactDetails}>
               <div style={styles.contactItem}>
                 <span style={styles.contactIcon}>
@@ -136,7 +112,7 @@ export default function SupportPage() {
                     <polyline points="12 6 12 12 16 14"/>
                   </svg>
                 </span>
-                <span>We typically respond within 24-48 hours</span>
+                <span>{t.support.responseTime}</span>
               </div>
               <div style={styles.contactItem}>
                 <span style={styles.contactIcon}>
@@ -145,7 +121,7 @@ export default function SupportPage() {
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                   </svg>
                 </span>
-                <span>Your message is sent securely</span>
+                <span>{t.support.secureMessage}</span>
               </div>
             </div>
           </div>
@@ -154,72 +130,68 @@ export default function SupportPage() {
             {formState === 'success' ? (
               <div style={styles.successMessage}>
                 <span style={styles.successIcon}>✓</span>
-                <h3 style={styles.successTitle}>Message sent!</h3>
-                <p style={styles.successText}>
-                  Thanks for reaching out. We'll get back to you soon.
-                </p>
+                <h3 style={styles.successTitle}>{t.support.form.successTitle}</h3>
+                <p style={styles.successText}>{t.support.form.successText}</p>
                 <button
                   type="button"
                   style={styles.resetButton}
                   onClick={() => setFormState('idle')}
                 >
-                  Send another message
+                  {t.support.form.sendAnother}
                 </button>
               </div>
             ) : (
               <>
                 <div style={styles.formGroup}>
-                  <label style={styles.label} htmlFor="name">Name</label>
+                  <label style={styles.label} htmlFor="name">{t.support.form.name}</label>
                   <input
                     style={styles.input}
                     type="text"
                     id="name"
                     name="name"
                     required
-                    placeholder="Your name"
+                    placeholder={t.support.form.namePlaceholder}
                   />
                 </div>
 
                 <div style={styles.formGroup}>
-                  <label style={styles.label} htmlFor="email">Email</label>
+                  <label style={styles.label} htmlFor="email">{t.support.form.email}</label>
                   <input
                     style={styles.input}
                     type="email"
                     id="email"
                     name="email"
                     required
-                    placeholder="your@email.com"
+                    placeholder={t.support.form.emailPlaceholder}
                   />
                 </div>
 
                 <div style={styles.formGroup}>
-                  <label style={styles.label} htmlFor="subject">Subject</label>
+                  <label style={styles.label} htmlFor="subject">{t.support.form.subject}</label>
                   <select style={styles.select} id="subject" name="subject" required>
-                    <option value="">Select a topic</option>
-                    <option value="bug">Bug Report</option>
-                    <option value="feature">Feature Request</option>
-                    <option value="question">General Question</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="other">Other</option>
+                    <option value="">{t.support.form.subjectPlaceholder}</option>
+                    <option value="bug">{t.support.form.subjectOptions.bug}</option>
+                    <option value="feature">{t.support.form.subjectOptions.feature}</option>
+                    <option value="question">{t.support.form.subjectOptions.question}</option>
+                    <option value="feedback">{t.support.form.subjectOptions.feedback}</option>
+                    <option value="other">{t.support.form.subjectOptions.other}</option>
                   </select>
                 </div>
 
                 <div style={styles.formGroup}>
-                  <label style={styles.label} htmlFor="message">Message</label>
+                  <label style={styles.label} htmlFor="message">{t.support.form.message}</label>
                   <textarea
                     style={styles.textarea}
                     id="message"
                     name="message"
                     required
                     rows={5}
-                    placeholder="Describe your issue or question in detail..."
+                    placeholder={t.support.form.messagePlaceholder}
                   />
                 </div>
 
                 {formState === 'error' && (
-                  <div style={styles.errorMessage}>
-                    Something went wrong. Please try again or email us directly.
-                  </div>
+                  <div style={styles.errorMessage}>{t.support.form.error}</div>
                 )}
 
                 <button
@@ -227,7 +199,7 @@ export default function SupportPage() {
                   style={styles.submitButton}
                   disabled={formState === 'sending'}
                 >
-                  {formState === 'sending' ? 'Sending...' : 'Send Message'}
+                  {formState === 'sending' ? t.support.form.sending : t.support.form.submit}
                 </button>
               </>
             )}
@@ -238,10 +210,10 @@ export default function SupportPage() {
       {/* Footer */}
       <footer style={styles.footer}>
         <div style={styles.footerContent}>
-          <p>© 2024 SYNTALYS TECH. All rights reserved.</p>
+          <p>{t.home.footerCopyright}</p>
           <div style={styles.footerLinks}>
-            <Link href="/" style={styles.footerLink}>Home</Link>
-            <Link href="/privacy" style={styles.footerLink}>Privacy</Link>
+            <Link href="/" style={styles.footerLink}>{t.nav.home}</Link>
+            <Link href="/privacy" style={styles.footerLink}>{t.nav.privacy}</Link>
           </div>
         </div>
       </footer>
@@ -286,6 +258,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   logoAccent: {
     color: '#FF8A00',
+  },
+  navRight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '24px',
   },
   navLinks: {
     display: 'flex',
