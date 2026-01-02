@@ -65,6 +65,7 @@ const FeatureIcon = ({ type }: { type: string }) => {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
 
   useEffect(() => {
@@ -90,14 +91,37 @@ export default function Home() {
             <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
           </div>
           <div style={styles.navRight}>
-            <div style={styles.navLinks}>
+            <div className="nav-links" style={styles.navLinks}>
               <Link href="/" style={styles.navLink}>{t.nav.home}</Link>
               <Link href="/privacy" style={styles.navLink}>{t.nav.privacy}</Link>
               <Link href="/support" style={styles.navLink}>{t.nav.support}</Link>
             </div>
             <LanguageSelector />
+            {/* Mobile Menu Button */}
+            <button
+              className="mobile-menu-btn"
+              style={styles.mobileMenuBtn}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                {mobileMenuOpen ? (
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                ) : (
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                )}
+              </svg>
+            </button>
           </div>
         </div>
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu" style={styles.mobileMenu}>
+            <Link href="/" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.home}</Link>
+            <Link href="/privacy" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.privacy}</Link>
+            <Link href="/support" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.support}</Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -106,7 +130,7 @@ export default function Home() {
           {mounted && floatingNotes.map((note, i) => (
             <div
               key={i}
-              className="animate-float"
+              className="animate-float floating-note"
               style={{
                 ...styles.floatingNote,
                 left: `${note.x}%`,
@@ -133,7 +157,7 @@ export default function Home() {
             {t.home.heroSubtitle}
           </p>
 
-          <div style={styles.heroButtons}>
+          <div className="hero-buttons" style={styles.heroButtons}>
             <a href="#" style={styles.primaryButton}>
               <svg width="20" height="24" viewBox="0 0 384 512" fill="currentColor">
                 <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
@@ -150,7 +174,7 @@ export default function Home() {
         </div>
 
         {/* Phone Mockup - Realistic App UI */}
-        <div style={styles.phoneMockup} className={mounted ? 'animate-scaleIn delay-300' : ''}>
+        <div style={styles.phoneMockup} className={`phone-mockup ${mounted ? 'animate-scaleIn delay-300' : ''}`}>
           {/* Side Buttons */}
           <div style={styles.phoneSideButtonLeft}></div>
           <div style={styles.phoneSideButtonRight1}></div>
@@ -263,7 +287,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div style={styles.featuresGrid}>
+        <div className="features-grid" style={styles.featuresGrid}>
           {features.map((feature, i) => (
             <div
               key={i}
@@ -284,7 +308,7 @@ export default function Home() {
           {t.home.howItWorksTitle} <span style={styles.heroTitleAccent}>Mentara</span> {t.home.howItWorksTitle2}
         </h2>
 
-        <div style={styles.stepsContainer}>
+        <div className="steps-container" style={styles.stepsContainer}>
           <div style={styles.step}>
             <div style={styles.stepNumber}>1</div>
             <div style={styles.stepContent}>
@@ -295,7 +319,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={styles.stepLine}></div>
+          <div className="step-line" style={styles.stepLine}></div>
 
           <div style={styles.step}>
             <div style={styles.stepNumber}>2</div>
@@ -307,7 +331,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={styles.stepLine}></div>
+          <div className="step-line" style={styles.stepLine}></div>
 
           <div style={styles.step}>
             <div style={styles.stepNumber}>3</div>
@@ -338,8 +362,8 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <div style={styles.footerContent}>
-          <div style={styles.footerBrand}>
+        <div className="footer-content" style={styles.footerContent}>
+          <div className="footer-brand" style={styles.footerBrand}>
             <div style={styles.logo}>
               <Image src="/icon.png" alt="Mentara" width={32} height={32} />
               <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
@@ -347,7 +371,7 @@ export default function Home() {
             <p style={styles.footerTagline}>{t.home.footerTagline}</p>
           </div>
 
-          <div style={styles.footerLinks}>
+          <div className="footer-links" style={styles.footerLinks}>
             <div style={styles.footerColumn}>
               <h4 style={styles.footerColumnTitle}>{t.home.footerLegal}</h4>
               <Link href="/privacy" style={styles.footerLink}>{t.nav.privacy}</Link>
@@ -865,5 +889,29 @@ const styles: { [key: string]: React.CSSProperties } = {
     paddingTop: '24px',
     fontSize: '14px',
     color: '#a0a0a0',
+  },
+  mobileMenuBtn: {
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '8px',
+    color: '#1a1a1a',
+  },
+  mobileMenu: {
+    display: 'none',
+    flexDirection: 'column',
+    padding: '16px 24px',
+    background: '#FFFFFF',
+    borderTop: '1px solid #E5E5E5',
+  },
+  mobileMenuLink: {
+    padding: '12px 0',
+    fontSize: '16px',
+    fontWeight: 500,
+    color: '#1a1a1a',
+    borderBottom: '1px solid #E5E5E5',
   },
 }
