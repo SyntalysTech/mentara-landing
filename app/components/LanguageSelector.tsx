@@ -26,6 +26,16 @@ export function LanguageSelector() {
       >
         ES
       </button>
+      <span style={styles.divider}>|</span>
+      <button
+        style={{
+          ...styles.button,
+          ...(language === 'fr' ? styles.buttonActive : {}),
+        }}
+        onClick={() => setLanguage('fr')}
+      >
+        FR
+      </button>
     </div>
   )
 }

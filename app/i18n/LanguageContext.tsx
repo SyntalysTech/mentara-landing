@@ -16,12 +16,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('mentara-lang') as Language
-    if (saved && (saved === 'en' || saved === 'es')) {
+    if (saved && (saved === 'en' || saved === 'es' || saved === 'fr')) {
       setLanguageState(saved)
     } else {
       const browserLang = navigator.language.toLowerCase()
       if (browserLang.startsWith('es')) {
         setLanguageState('es')
+      } else if (browserLang.startsWith('fr')) {
+        setLanguageState('fr')
       }
     }
   }, [])
