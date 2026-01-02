@@ -4,10 +4,39 @@ import { useState, useRef, useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { Language } from '../i18n/translations'
 
-const languageLabels: Record<Language, { short: string; full: string; flag: string }> = {
-  en: { short: 'EN', full: 'English', flag: '🇬🇧' },
-  es: { short: 'ES', full: 'Español', flag: '🇪🇸' },
-  fr: { short: 'FR', full: 'Français', flag: '🇫🇷' },
+const FlagIcon = ({ country }: { country: 'gb' | 'es' | 'fr' }) => {
+  const flags = {
+    gb: (
+      <svg width="20" height="15" viewBox="0 0 60 30">
+        <clipPath id="t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+        <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#t)" stroke="#C8102E" strokeWidth="4"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+      </svg>
+    ),
+    es: (
+      <svg width="20" height="15" viewBox="0 0 750 500">
+        <rect width="750" height="500" fill="#c60b1e"/>
+        <rect width="750" height="250" y="125" fill="#ffc400"/>
+      </svg>
+    ),
+    fr: (
+      <svg width="20" height="15" viewBox="0 0 900 600">
+        <rect width="900" height="600" fill="#ED2939"/>
+        <rect width="600" height="600" fill="#fff"/>
+        <rect width="300" height="600" fill="#002395"/>
+      </svg>
+    ),
+  }
+  return <span style={{ display: 'flex', alignItems: 'center' }}>{flags[country]}</span>
+}
+
+const languageLabels: Record<Language, { short: string; full: string; flag: 'gb' | 'es' | 'fr' }> = {
+  en: { short: 'EN', full: 'English', flag: 'gb' },
+  es: { short: 'ES', full: 'Español', flag: 'es' },
+  fr: { short: 'FR', full: 'Français', flag: 'fr' },
 }
 
 export function LanguageSelector() {
@@ -38,7 +67,7 @@ export function LanguageSelector() {
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span style={styles.flag}>{languageLabels[language].flag}</span>
+        <FlagIcon country={languageLabels[language].flag} />
         <span>{languageLabels[language].short}</span>
         <svg
           width="12"
@@ -67,7 +96,7 @@ export function LanguageSelector() {
               }}
               onClick={() => handleSelect(lang)}
             >
-              <span style={styles.optionFlag}>{languageLabels[lang].flag}</span>
+              <FlagIcon country={languageLabels[lang].flag} />
               <span style={styles.optionFull}>{languageLabels[lang].full}</span>
               {language === lang && (
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
