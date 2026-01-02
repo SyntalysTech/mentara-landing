@@ -4,10 +4,10 @@ import { useState, useRef, useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { Language } from '../i18n/translations'
 
-const languageLabels: Record<Language, { short: string; full: string }> = {
-  en: { short: 'EN', full: 'English' },
-  es: { short: 'ES', full: 'Español' },
-  fr: { short: 'FR', full: 'Français' },
+const languageLabels: Record<Language, { short: string; full: string; flag: string }> = {
+  en: { short: 'EN', full: 'English', flag: '🇬🇧' },
+  es: { short: 'ES', full: 'Español', flag: '🇪🇸' },
+  fr: { short: 'FR', full: 'Français', flag: '🇫🇷' },
 }
 
 export function LanguageSelector() {
@@ -38,11 +38,7 @@ export function LanguageSelector() {
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-        </svg>
+        <span style={styles.flag}>{languageLabels[language].flag}</span>
         <span>{languageLabels[language].short}</span>
         <svg
           width="12"
@@ -71,7 +67,7 @@ export function LanguageSelector() {
               }}
               onClick={() => handleSelect(lang)}
             >
-              <span style={styles.optionShort}>{languageLabels[lang].short}</span>
+              <span style={styles.optionFlag}>{languageLabels[lang].flag}</span>
               <span style={styles.optionFull}>{languageLabels[lang].full}</span>
               {language === lang && (
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF8A00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -133,12 +129,15 @@ const styles: { [key: string]: React.CSSProperties } = {
   optionActive: {
     background: 'rgba(255, 138, 0, 0.08)',
   },
-  optionShort: {
-    fontWeight: 600,
-    width: '24px',
+  optionFlag: {
+    fontSize: '18px',
   },
   optionFull: {
     flex: 1,
     color: '#666666',
+  },
+  flag: {
+    fontSize: '18px',
+    lineHeight: 1,
   },
 }
