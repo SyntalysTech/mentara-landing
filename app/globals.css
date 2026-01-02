@@ -180,3 +180,17 @@ a {
     margin-top: 0 !important;
   }
 }
+
+/* Support/Privacy pages responsive */
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .footer-content-simple {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+}

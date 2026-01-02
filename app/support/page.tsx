@@ -9,6 +9,7 @@ import { LanguageSelector } from '../components/LanguageSelector'
 export default function SupportPage() {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,14 +49,35 @@ export default function SupportPage() {
             <span style={styles.logoText}>MENT<span style={styles.logoAccent}>ARA</span></span>
           </Link>
           <div style={styles.navRight}>
-            <div style={styles.navLinks}>
+            <div className="nav-links" style={styles.navLinks}>
               <Link href="/" style={styles.navLink}>{t.nav.home}</Link>
               <Link href="/privacy" style={styles.navLink}>{t.nav.privacy}</Link>
               <Link href="/support" style={styles.navLinkActive}>{t.nav.support}</Link>
             </div>
             <LanguageSelector />
+            <button
+              className="mobile-menu-btn"
+              style={styles.mobileMenuBtn}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                {mobileMenuOpen ? (
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                ) : (
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                )}
+              </svg>
+            </button>
           </div>
         </div>
+        {mobileMenuOpen && (
+          <div className="mobile-menu" style={styles.mobileMenu}>
+            <Link href="/" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.home}</Link>
+            <Link href="/privacy" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.privacy}</Link>
+            <Link href="/support" style={styles.mobileMenuLink} onClick={() => setMobileMenuOpen(false)}>{t.nav.support}</Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero */}
@@ -100,7 +122,7 @@ export default function SupportPage() {
 
       {/* Contact Form */}
       <section style={styles.contactSection}>
-        <div style={styles.contactContent}>
+        <div className="contact-content" style={styles.contactContent}>
           <div style={styles.contactInfo}>
             <h2 style={styles.sectionTitle}>{t.support.contactTitle}</h2>
             <p style={styles.contactDescription}>{t.support.contactDescription}</p>
@@ -209,7 +231,7 @@ export default function SupportPage() {
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <div style={styles.footerContent}>
+        <div className="footer-content-simple" style={styles.footerContent}>
           <p>{t.home.footerCopyright}</p>
           <div style={styles.footerLinks}>
             <Link href="/" style={styles.footerLink}>{t.nav.home}</Link>
@@ -507,5 +529,29 @@ const styles: { [key: string]: React.CSSProperties } = {
   footerLink: {
     color: '#FFFFFF',
     opacity: 0.8,
+  },
+  mobileMenuBtn: {
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '8px',
+    color: '#1a1a1a',
+  },
+  mobileMenu: {
+    display: 'none',
+    flexDirection: 'column',
+    padding: '16px 24px',
+    background: '#FFFFFF',
+    borderTop: '1px solid #E5E5E5',
+  },
+  mobileMenuLink: {
+    padding: '12px 0',
+    fontSize: '16px',
+    fontWeight: 500,
+    color: '#1a1a1a',
+    borderBottom: '1px solid #E5E5E5',
   },
 }
